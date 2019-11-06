@@ -1,7 +1,10 @@
 package com.touchlane.addressbook.ui.list
 
 import android.util.Log
-import androidx.databinding.*
+import androidx.databinding.BindingAdapter
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableList
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.touchlane.addressbook.components.contactRepository
 import com.touchlane.addressbook.domain.model.DomainContact
@@ -10,6 +13,7 @@ import com.touchlane.addressbook.ui.base.BaseAppViewModel
 import com.touchlane.addressbook.ui.widgets.RecyclerViewWithPlaceholder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 
 class ContactListViewModel : BaseAppViewModel() {
 
@@ -18,13 +22,15 @@ class ContactListViewModel : BaseAppViewModel() {
     val contacts: ObservableList<DomainContact> = ObservableArrayList()
     val loadingProgress: ObservableBoolean = ObservableBoolean()
     private val listeners: MutableSet<OnContactSelectedListener> = mutableSetOf()
+    private val searchCriteria: BehaviorSubject<String> = BehaviorSubject.createDefault("")
 
     init {
         doRefresh()
     }
 
     fun doRefresh() {
-        val disposable = contactsRepository.loadAll()
+        val disposable =
+            searchCriteria.flatMap(contactsRepository::search)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loadingProgress.set(true) }
@@ -51,6 +57,10 @@ class ContactListViewModel : BaseAppViewModel() {
 
     fun unregisterContactSelectedListener(listener: OnContactSelectedListener) {
         listeners.remove(listener)
+    }
+
+    fun search(query: String) {
+        searchCriteria.onNext(query)
     }
 
     companion object {

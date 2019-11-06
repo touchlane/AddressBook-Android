@@ -2,6 +2,7 @@
 <resources>
     <attr name="placeholderId" format="reference"/>
     <attr name="maxSectionLines" format="integer"/>
+    <attr name="searchViewStyle" format="reference" />
 
     <declare-styleable name="RecyclerViewWithPlaceholder">
         <attr name="placeholderId"/>
@@ -9,5 +10,28 @@
 
     <declare-styleable name="TextSection">
         <attr name="maxSectionLines"/>
+    </declare-styleable>
+
+    <declare-styleable name="SearchView">
+        <!-- The layout to use for the search view. -->
+        <attr name="layout" format="reference" />
+        <!--
+             The default state of the SearchView. If true, it will be iconified when not in
+             use and expanded when clicked.
+        -->
+        <attr name="iconifiedByDefault" format="boolean" />
+        <attr name="android:maxWidth" />
+        <attr name="queryHint" format="string" />
+        <attr name="android:imeOptions" />
+        <attr name="android:inputType" />
+        <attr name="closeIcon" format="reference" />
+        <attr name="goIcon" format="reference" />
+        <attr name="searchIcon" format="reference" />
+        <attr name="voiceIcon" format="reference" />
+        <attr name="commitIcon" format="reference" />
+        <attr name="suggestionRowLayout" format="reference" />
+        <attr name="queryBackground" format="reference" />
+        <attr name="submitBackground" format="reference" />
+        <attr name="android:focusable" />
     </declare-styleable>
 </resources>

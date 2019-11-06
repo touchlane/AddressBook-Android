@@ -8,8 +8,6 @@ interface ContactRepository {
 
     fun save(contact: DomainContact): Single<DomainContact>
 
-    fun loadAll(): Observable<List<DomainContact>>
-
     fun search(name: String): Observable<List<DomainContact>>
 
     fun findById(id: Long): Single<DomainContact>

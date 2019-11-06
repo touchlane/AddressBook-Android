@@ -8,8 +8,6 @@ interface ContactService {
 
     fun save(contact: DbContact): Single<DbContact>
 
-    fun loadAll(): Observable<List<DbContact>>
-
     fun search(name: String): Observable<List<DbContact>>
 
     fun findById(id: Long): Single<DbContact>

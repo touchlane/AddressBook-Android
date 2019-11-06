@@ -14,12 +14,8 @@ class ContactRepositoryImpl(private val dbService: ContactService) :
         return dbService.save(fromDomain(contact)).map(::toDomain)
     }
 
-    override fun loadAll(): Observable<List<DomainContact>> {
-        return dbService.loadAll().map { it.map(::toDomain) }
-    }
-
     override fun search(name: String): Observable<List<DomainContact>> {
-        return dbService.loadAll().map { it.map(::toDomain) }
+        return dbService.search(name).map { it.map(::toDomain) }
     }
 
     override fun findById(id: Long): Single<DomainContact> {

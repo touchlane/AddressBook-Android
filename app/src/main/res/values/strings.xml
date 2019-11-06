@@ -22,4 +22,5 @@
     <string name="error_cannot_save_not_valid">Please check contact information</string>
     <string name="error_cannot_save_exists">Account with same email already exists</string>
     <string name="error_cannot_save_default">An error occurred. Please try again.</string>
+    <string name="search">Search</string>
 </resources>

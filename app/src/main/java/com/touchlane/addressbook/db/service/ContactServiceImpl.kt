@@ -16,12 +16,12 @@ class ContactServiceImpl(private val contactDAO: ContactDAO) : ContactService {
             .let (::saveInternal)
     }
 
-    override fun loadAll(): Observable<List<DbContact>> {
-        return contactDAO.loadAll()
-    }
-
     override fun search(name: String): Observable<List<DbContact>> {
-        return contactDAO.search("%$name%")
+        return if (name.isBlank()) {
+            contactDAO.loadAll()
+        } else {
+            contactDAO.search("%$name%")
+        }
     }
 
     override fun findById(id: Long): Single<DbContact> {
