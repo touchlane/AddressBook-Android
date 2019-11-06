@@ -31,6 +31,7 @@ dependencies {
     def room_version = "2.2.1"
     def recyclerview_version = "1.1.0-rc01"
     def lifecycle_version = "2.1.0"
+    def mockito_version = "3.0.0"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
@@ -53,6 +54,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation 'org.robolectric:robolectric:4.3'
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

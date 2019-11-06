@@ -6,19 +6,22 @@ import com.touchlane.addressbook.domain.model.DomainContact
 import com.touchlane.addressbook.domain.repository.ContactRepository
 import com.touchlane.addressbook.ui.base.BaseAppViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
-class ContactDetailsViewModel : BaseAppViewModel() {
+class ContactDetailsViewModel(internal val contactRepository: ContactRepository) : BaseAppViewModel() {
 
+    constructor() : this(contactRepository())
     val contact: ObservableField<DomainContact?> = ObservableField()
-    private val contactsRepository: ContactRepository = contactRepository()
 
     fun onLoadContact(id: Long) {
-        val disposable = contactsRepository.findById(id)
+        val disposable = contactRepository.findById(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(contact::set)
+            .subscribe({
+                contact.set(it)
+            }, {
+                println(it.toString())
+            })
 
         addDisposable(disposable)
     }
