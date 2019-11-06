@@ -33,7 +33,6 @@
     <style name="ContactItemName">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/almostBlack</item>
-        <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
 

@@ -1,10 +1,7 @@
 package com.touchlane.addressbook.ui.list
 
 import android.util.Log
-import androidx.databinding.BindingAdapter
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableField
-import androidx.databinding.ObservableList
+import androidx.databinding.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.touchlane.addressbook.components.contactRepository
 import com.touchlane.addressbook.domain.model.DomainContact
@@ -19,8 +16,8 @@ class ContactListViewModel : BaseAppViewModel() {
     private val contactsRepository: ContactRepository = contactRepository()
 
     val contacts: ObservableList<DomainContact> = ObservableArrayList()
-    val loadingProgress: ObservableField<Boolean> = ObservableField()
-    val selectedForDetails: ObservableField<DomainContact?> = ObservableField()
+    val loadingProgress: ObservableBoolean = ObservableBoolean()
+    private val listeners: MutableSet<OnContactSelectedListener> = mutableSetOf()
 
     init {
         doRefresh()
@@ -45,8 +42,15 @@ class ContactListViewModel : BaseAppViewModel() {
     }
 
     fun onItemClicked(contact: DomainContact) {
-        selectedForDetails.set(contact)
-        selectedForDetails.notifyChange()
+        listeners.forEach { it.onContactSelected(contact) }
+    }
+
+    fun registerContactSelectedListener(listener: OnContactSelectedListener) {
+        listeners.add(listener)
+    }
+
+    fun unregisterContactSelectedListener(listener: OnContactSelectedListener) {
+        listeners.remove(listener)
     }
 
     companion object {
@@ -59,7 +63,7 @@ class ContactListViewModel : BaseAppViewModel() {
 
         @BindingAdapter("app:inProgress")
         @JvmStatic
-        fun setInProgress(srLayout: SwipeRefreshLayout, items: ObservableField<Boolean>) {
+        fun setInProgress(srLayout: SwipeRefreshLayout, items: ObservableBoolean) {
             srLayout.isRefreshing = items.get() ?: false
         }
 
@@ -68,5 +72,9 @@ class ContactListViewModel : BaseAppViewModel() {
         fun bindOnClick(list: RecyclerViewWithPlaceholder, listener: RecyclerViewWithPlaceholder.SelectItemListener) {
             list.onItemSelectedListener = listener
         }
+    }
+
+    interface OnContactSelectedListener {
+        fun onContactSelected(contact: DomainContact)
     }
 }

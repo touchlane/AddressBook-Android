@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_first_name"
                     app:error="@{vm.contactInfo.firstNameError}"
-                    app:validation="@{emba.INSTANCE.firstNameRule}">
+                    app:validationOnFocusChange="@{emba.INSTANCE.firstNameRule}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/firstNameInput"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_last_name"
                     app:error="@{vm.contactInfo.lastNameError}"
-                    app:validation="@{emba.INSTANCE.lastNameRule}">
+                    app:validationOnFocusChange="@{emba.INSTANCE.lastNameRule}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/lastNameInput"
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_email"
                     app:error="@{vm.contactInfo.emailError}"
-                    app:validation="@{emba.INSTANCE.emailRule}">
+                    app:validationOnFocusChange="@{emba.INSTANCE.emailRule}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/emailInput"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_phone"
                     app:error="@{vm.contactInfo.phoneError}"
-                    app:validation="@{emba.INSTANCE.phoneRule}">
+                    app:validationOnFocusChange="@{emba.INSTANCE.phoneRule}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/phoneInput"
@@ -109,7 +109,7 @@
                         android:id="@+id/addressInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:paddingTop="@dimen/padding_big_12"
                         android:paddingBottom="@dimen/padding_big_12"
                         android:text="@={vm.contactInfo.address}"/>

@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.view.SupportMenuInflater
-import androidx.databinding.Observable
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.touchlane.addressbook.R
 import com.touchlane.addressbook.databinding.ActivityContactListBinding
+import com.touchlane.addressbook.domain.model.DomainContact
 import com.touchlane.addressbook.ui.base.BaseViewModelAppActivity
 import com.touchlane.addressbook.ui.details.ContactDetailsActivity
 import com.touchlane.addressbook.ui.edit.CreateContactActivity
@@ -16,6 +16,7 @@ import com.touchlane.addressbook.ui.edit.CreateContactActivity
 class ContactListActivity : BaseViewModelAppActivity<ContactListViewModel>(ContactListViewModel::class.java) {
 
     private lateinit var binding: ActivityContactListBinding
+    private val contactSelectedListener = createContactSelectedListener()
 
     override fun showBackButton(): Boolean = false
 
@@ -27,17 +28,24 @@ class ContactListActivity : BaseViewModelAppActivity<ContactListViewModel>(Conta
         setContentView(binding.root)
 
         setupViews()
-        setupObservers()
     }
 
-    private fun setupObservers() {
-        viewModel.selectedForDetails.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                viewModel.selectedForDetails.get()?.let {
-                    ContactDetailsActivity.start(this@ContactListActivity, it.id!!)
-                }
+    override fun onStart() {
+        super.onStart()
+        viewModel.registerContactSelectedListener(contactSelectedListener)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.unregisterContactSelectedListener(contactSelectedListener)
+    }
+
+    private fun createContactSelectedListener(): ContactListViewModel.OnContactSelectedListener {
+        return object : ContactListViewModel.OnContactSelectedListener {
+            override fun onContactSelected(contact: DomainContact) {
+                ContactDetailsActivity.start(this@ContactListActivity, contact.id!!)
             }
-        })
+        }
     }
 
     private fun setupViews() {

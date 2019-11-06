@@ -1,9 +1,8 @@
 package com.touchlane.addressbook.ui.edit.binding
 
 import androidx.annotation.StringRes
-import androidx.core.widget.addTextChangedListener
-import com.google.android.material.textfield.TextInputLayout
 import androidx.databinding.BindingAdapter
+import com.google.android.material.textfield.TextInputLayout
 import com.touchlane.addressbook.EMAIL_REGEX
 import com.touchlane.addressbook.PHONE_REGEX
 import com.touchlane.addressbook.R
@@ -15,16 +14,20 @@ import com.touchlane.addressbook.components.appContext
  */
 object ErrorMessageBindingAdapter {
 
-    @BindingAdapter("app:validation")
+    @BindingAdapter("app:validationOnFocusChange")
     @JvmStatic
-    fun setErrorEnable(
+    fun setValidationOnFocus(
         textInputLayout: TextInputLayout,
         validationRule: ValidationRule
     ) {
-        textInputLayout.editText?.addTextChangedListener {
-            val validationResult = validationRule.validate(it!!)
-            textInputLayout.isErrorEnabled = validationResult.valid.not()
-            textInputLayout.error = validationResult.message
+        textInputLayout.editText?.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                textInputLayout.error = null
+            } else {
+                val validationResult = validationRule.validate(textInputLayout.editText?.text ?: "")
+                textInputLayout.isErrorEnabled = validationResult.valid.not()
+                textInputLayout.error = validationResult.message
+            }
         }
     }
 
@@ -35,10 +38,10 @@ object ErrorMessageBindingAdapter {
     val lastNameRule = NotEmptyRule(R.string.error_last_name_required)
 
     @JvmStatic
-    val emailRule = NotEmptyRuleWIthPattern(R.string.error_email_required, R.string.error_email_invalid, EMAIL_REGEX)
+    val emailRule = NotEmptyRuleWithPattern(R.string.error_email_required, R.string.error_email_invalid, EMAIL_REGEX)
 
     @JvmStatic
-    val phoneRule = NotEmptyRuleWIthPattern(R.string.error_phone_required, R.string.error_phone_invalid, PHONE_REGEX)
+    val phoneRule = NotEmptyRuleWithPattern(R.string.error_phone_required, R.string.error_phone_invalid, PHONE_REGEX)
 
     class NotEmptyRule(@StringRes private val errorId: Int) : ValidationRule {
 
@@ -49,7 +52,7 @@ object ErrorMessageBindingAdapter {
         }
     }
 
-    class NotEmptyRuleWIthPattern(@StringRes private val emptyErrorId: Int,
+    class NotEmptyRuleWithPattern(@StringRes private val emptyErrorId: Int,
                                   @StringRes private val notMatches: Int,
                                   private val regex: String) : ValidationRule {
 
