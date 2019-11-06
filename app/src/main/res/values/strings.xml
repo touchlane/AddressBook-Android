@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Address Book</string>
+    <string name="no_contacts">No Contacts</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="no_contacts_info">Use the \'+\' icon to add a new contact</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_phone">Phone Number</string>
+    <string name="hint_email">Email Address</string>
+    <string name="hint_address">Address</string>
+    <string name="title_add_contact">Add New Contact</string>
+    <string name="save">Save</string>
+
+
+    <string name="error_fist_name_required">First Name is required</string>
+    <string name="error_last_name_required">Last Name is required</string>
+    <string name="error_email_required">Email is required</string>
+    <string name="error_email_invalid">Email is not valid</string>
+    <string name="error_phone_required">Phone number is required</string>
+    <string name="error_phone_invalid">Phone number is not valid</string>
+
+    <string name="error_cannot_save_not_valid">Please check contact information</string>
+    <string name="error_cannot_save_exists">Account with same email already exists</string>
+    <string name="error_cannot_save_default">An error occurred. Please try again.</string>
+</resources>

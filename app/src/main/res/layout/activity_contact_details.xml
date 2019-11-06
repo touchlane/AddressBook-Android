@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.touchlane.addressbook.ui.details.ContactDetailsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.touchlane.addressbook.ui.widgets.TextSection
+            android:id="@+id/first_name_section"
+            style="@style/TextSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:text="@{vm.contact.firstName}"
+            />
+
+        <com.touchlane.addressbook.ui.widgets.TextSection
+            android:id="@+id/last_name_section"
+            style="@style/TextSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:text="@{vm.contact.lastName}"
+            />
+
+        <com.touchlane.addressbook.ui.widgets.TextSection
+            android:id="@+id/email_section"
+            style="@style/TextSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:text="@{vm.contact.email}"
+            />
+
+        <com.touchlane.addressbook.ui.widgets.TextSection
+            android:id="@+id/phone_section"
+            style="@style/TextSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:text="@{vm.contact.cellPhone}"
+            />
+
+        <com.touchlane.addressbook.ui.widgets.TextSection
+            android:id="@+id/address_section"
+            style="@style/TextSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:text="@{vm.contact.address}"
+            />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="placeholderId" format="reference"/>
+    <attr name="maxSectionLines" format="integer"/>
+
+    <declare-styleable name="RecyclerViewWithPlaceholder">
+        <attr name="placeholderId"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextSection">
+        <attr name="maxSectionLines"/>
+    </declare-styleable>
+</resources>

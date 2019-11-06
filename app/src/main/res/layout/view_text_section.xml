@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <merge
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_large_16"
+        android:paddingStart="@dimen/padding_large_16"
+        tools:parentTag="android.widget.LinearLayout"
+        >
+
+        <TextView
+            android:id="@+id/section_text"
+            style="@style/ContactItemName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:text="Joshua Smith"
+            android:paddingTop="@dimen/padding_big_12"
+            android:paddingBottom="@dimen/padding_big_12"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lightGray"/>
+
+    </merge>
+</layout>
