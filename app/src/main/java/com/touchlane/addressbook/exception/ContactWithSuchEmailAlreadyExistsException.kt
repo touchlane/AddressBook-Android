@@ -1,5 +1,3 @@
 package com.touchlane.addressbook.exception
 
-class ContactWithSuchEmailAlreadyExistsException : Throwable() {
-
-}
+class ContactWithSuchEmailAlreadyExistsException : Throwable()

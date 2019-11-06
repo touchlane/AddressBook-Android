@@ -6,35 +6,41 @@ import com.touchlane.addressbook.db.model.DbContact
 import com.touchlane.addressbook.exception.ContactNotValidException
 import com.touchlane.addressbook.exception.ContactWithSuchEmailAlreadyExistsException
 import com.touchlane.addressbook.isValid
+import io.reactivex.Observable
+import io.reactivex.Single
 
 class ContactServiceImpl(private val contactDAO: ContactDAO) : ContactService {
 
-    override fun save(contact: DbContact): DbContact {
-        ensureValid(contact)
+    override fun save(contact: DbContact): Single<DbContact> {
+        return ensureValid(contact)
             .let (::saveInternal)
-        return contact
     }
 
-    override fun loadAll(): List<DbContact> {
+    override fun loadAll(): Observable<List<DbContact>> {
         return contactDAO.loadAll()
     }
 
-    override fun search(name: String): List<DbContact> {
+    override fun search(name: String): Observable<List<DbContact>> {
         return contactDAO.search("%$name%")
     }
 
-    override fun findById(id: Long): DbContact? {
+    override fun findById(id: Long): Single<DbContact> {
         return contactDAO.findById(id)
     }
 
-    private fun saveInternal(dbContact: DbContact): DbContact {
-        try {
-            val id = contactDAO.save(dbContact)
-            dbContact.id = id
-            return dbContact
-        } catch (e: SQLiteConstraintException) {
-            throw ContactWithSuchEmailAlreadyExistsException()
-        }
+    private fun saveInternal(dbContact: DbContact): Single<DbContact> {
+        return contactDAO.save(dbContact)
+            .map {
+                dbContact.id = it
+                dbContact
+            }
+            .onErrorResumeNext {
+                return@onErrorResumeNext if (it is SQLiteConstraintException) {
+                    Single.error<DbContact>(ContactWithSuchEmailAlreadyExistsException())
+                } else {
+                    Single.error(it)
+                }
+            }
     }
 
     private fun ensureValid(contact: DbContact): DbContact {

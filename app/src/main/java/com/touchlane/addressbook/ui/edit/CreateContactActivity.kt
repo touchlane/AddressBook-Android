@@ -1,6 +1,8 @@
 package com.touchlane.addressbook.ui.edit
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -30,6 +32,12 @@ class CreateContactActivity : BaseViewModelAppActivity<CreateContactViewModel>(C
             } else if (it.message.isNullOrBlank().not()){
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, CreateContactActivity::class.java))
         }
     }
 }

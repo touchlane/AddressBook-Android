@@ -1,6 +1,5 @@
 package com.touchlane.addressbook.ui.list
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -69,18 +68,6 @@ class ContactListActivity : BaseViewModelAppActivity<ContactListViewModel>(Conta
     }
 
     private fun onAddContact() {
-        startActivityForResult(Intent(this, CreateContactActivity::class.java), REQUEST_CODE_ADD_CONTACT)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_ADD_CONTACT) {
-            viewModel.doRefresh()
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
-    companion object {
-        const val REQUEST_CODE_ADD_CONTACT = 1
+        CreateContactActivity.start(this)
     }
 }
