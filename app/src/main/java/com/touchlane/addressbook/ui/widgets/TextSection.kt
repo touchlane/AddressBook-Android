@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.databinding.BindingAdapter
-import androidx.databinding.ObservableField
 import com.touchlane.addressbook.R
 import com.touchlane.addressbook.databinding.ViewTextSectionBinding
 

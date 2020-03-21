@@ -20,6 +20,7 @@
         </activity>
 
         <activity android:name=".ui.edit.CreateContactActivity" android:label="@string/title_add_contact"/>
+
         <activity android:name=".ui.details.ContactDetailsActivity" />
     </application>
 

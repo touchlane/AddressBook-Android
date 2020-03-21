@@ -3,15 +3,18 @@ package com.touchlane.addressbook.ui.edit.binding
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputLayout
+import com.touchlane.addressbook.AddressBookApplication
 import com.touchlane.addressbook.EMAIL_REGEX
 import com.touchlane.addressbook.PHONE_REGEX
 import com.touchlane.addressbook.R
-import com.touchlane.addressbook.components.appContext
 
 /**
  * Used as a error message and validation for the form for new contact
  * Validation rules can be easily added for any field, just extend ValidationRule interface
  */
+
+private fun appContext() = AddressBookApplication.instance
+
 object ErrorMessageBindingAdapter {
 
     @BindingAdapter("app:validationOnFocusChange")

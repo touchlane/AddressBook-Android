@@ -6,18 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import org.koin.android.ext.android.get
 
-abstract class BaseViewModelAppActivity<VM: BaseAppViewModel>(cls: Class<VM>) : AppCompatActivity() {
+abstract class BaseViewModelAppActivity<VM: BaseAppViewModel> : AppCompatActivity() {
 
-    protected val viewModel: VM by lazy { ViewModelProviders.of(this).get(cls) }
+    protected val viewModel: VM by lazy { instantiateViewModel() }
 
-    fun <T> LiveData<T?>.observe(action: (T?) -> Unit) {
-        observe(this@BaseViewModelAppActivity, Observer { action.invoke(it) })
-    }
+    protected abstract fun instantiateViewModel(): VM
 
-    fun <T> LiveData<T?>.observeNonNull(action: (T) -> Unit) {
-        observe(this@BaseViewModelAppActivity, Observer { it?.run(action)})
-    }
+    protected abstract fun showBackButton(): Boolean
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,5 +32,7 @@ abstract class BaseViewModelAppActivity<VM: BaseAppViewModel>(cls: Class<VM>) : 
         }
     }
 
-    protected abstract fun showBackButton(): Boolean
+    protected fun <T> LiveData<T?>.observeNonNull(action: (T) -> Unit) {
+        observe(this@BaseViewModelAppActivity, Observer { it?.run(action)})
+    }
 }

@@ -7,8 +7,9 @@ import android.os.Bundle
 import android.widget.Toast
 import com.touchlane.addressbook.databinding.ActivityEditContactBinding
 import com.touchlane.addressbook.ui.base.BaseViewModelAppActivity
+import org.koin.android.ext.android.get
 
-class CreateContactActivity : BaseViewModelAppActivity<CreateContactViewModel>(CreateContactViewModel::class.java) {
+class CreateContactActivity : BaseViewModelAppActivity<CreateContactViewModel>() {
 
     private lateinit var binding: ActivityEditContactBinding
 
@@ -20,6 +21,8 @@ class CreateContactActivity : BaseViewModelAppActivity<CreateContactViewModel>(C
 
         setupObservers()
     }
+
+    override fun instantiateViewModel(): CreateContactViewModel = get()
 
     override fun showBackButton(): Boolean = true
 

@@ -1,5 +1,6 @@
 package com.touchlane.addressbook.ui.list
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,12 +16,15 @@ import com.touchlane.addressbook.domain.model.DomainContact
 import com.touchlane.addressbook.ui.base.BaseViewModelAppActivity
 import com.touchlane.addressbook.ui.details.ContactDetailsActivity
 import com.touchlane.addressbook.ui.edit.CreateContactActivity
+import org.koin.android.ext.android.get
 
 
-class ContactListActivity : BaseViewModelAppActivity<ContactListViewModel>(ContactListViewModel::class.java) {
+class ContactListActivity : BaseViewModelAppActivity<ContactListViewModel>() {
 
     private lateinit var binding: ActivityContactListBinding
     private val contactSelectedListener = createContactSelectedListener()
+
+    override fun instantiateViewModel(): ContactListViewModel = get()
 
     override fun showBackButton(): Boolean = false
 
@@ -60,6 +64,7 @@ class ContactListActivity : BaseViewModelAppActivity<ContactListViewModel>(Conta
     }
 
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         SupportMenuInflater(this).inflate(R.menu.contacts_menu, menu)
         setupSeacrh(menu)

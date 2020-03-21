@@ -6,10 +6,13 @@ import android.os.Bundle
 import androidx.databinding.Observable
 import com.touchlane.addressbook.databinding.ActivityContactDetailsBinding
 import com.touchlane.addressbook.ui.base.BaseViewModelAppActivity
+import org.koin.android.ext.android.get
 
-class ContactDetailsActivity : BaseViewModelAppActivity<ContactDetailsViewModel>(ContactDetailsViewModel::class.java) {
+class ContactDetailsActivity : BaseViewModelAppActivity<ContactDetailsViewModel>() {
 
     private lateinit var binding: ActivityContactDetailsBinding
+
+    override fun instantiateViewModel(): ContactDetailsViewModel = get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

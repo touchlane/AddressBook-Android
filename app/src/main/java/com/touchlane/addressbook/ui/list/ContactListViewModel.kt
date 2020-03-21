@@ -6,7 +6,6 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableList
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.touchlane.addressbook.components.contactRepository
 import com.touchlane.addressbook.domain.model.DomainContact
 import com.touchlane.addressbook.domain.repository.ContactRepository
 import com.touchlane.addressbook.ui.base.BaseAppViewModel
@@ -15,9 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
-class ContactListViewModel : BaseAppViewModel() {
-
-    private val contactsRepository: ContactRepository = contactRepository()
+class ContactListViewModel(private val contactsRepository: ContactRepository) : BaseAppViewModel() {
 
     val contacts: ObservableList<DomainContact> = ObservableArrayList()
     val loadingProgress: ObservableBoolean = ObservableBoolean()

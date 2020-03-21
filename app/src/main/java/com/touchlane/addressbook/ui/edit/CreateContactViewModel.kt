@@ -1,21 +1,17 @@
 package com.touchlane.addressbook.ui.edit
 
 import androidx.lifecycle.MutableLiveData
-import com.touchlane.addressbook.R
-import com.touchlane.addressbook.components.appContext
-import com.touchlane.addressbook.components.contactRepository
+import com.touchlane.addressbook.domain.error.ErrorDispatcher
 import com.touchlane.addressbook.domain.repository.ContactRepository
-import com.touchlane.addressbook.exception.ContactNotValidException
 import com.touchlane.addressbook.exception.ContactWithSuchEmailAlreadyExistsException
 import com.touchlane.addressbook.ui.base.BaseAppViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class CreateContactViewModel : BaseAppViewModel() {
+class CreateContactViewModel(private val contactsRepository: ContactRepository,
+                             private val errorDispatcher: ErrorDispatcher) : BaseAppViewModel() {
 
     val contactInfo = ContactInfo()
-
-    private val contactsRepository: ContactRepository = contactRepository()
     val saveResult: MutableLiveData<OperationResult> = MutableLiveData()
 
     fun doSave() {
@@ -30,7 +26,7 @@ class CreateContactViewModel : BaseAppViewModel() {
             .subscribe({
                 saveResult.value = OperationResult(true)
             }, {
-                val message = dispatchError(it)
+                val message = errorDispatcher.dispatch(it)
                 if (it is ContactWithSuchEmailAlreadyExistsException) {
                     contactInfo.emailError.set(message)
                 } else {
@@ -38,14 +34,6 @@ class CreateContactViewModel : BaseAppViewModel() {
                 }
             })
         )
-    }
-
-    private fun dispatchError(error: Throwable): String {
-        return when(error) {
-            is ContactNotValidException -> appContext().getString(R.string.error_cannot_save_not_valid)
-            is ContactWithSuchEmailAlreadyExistsException -> appContext().getString(R.string.error_cannot_save_exists)
-            else -> appContext().getString(R.string.error_cannot_save_default)
-        }
     }
 
     class OperationResult(
