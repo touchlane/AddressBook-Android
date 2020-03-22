@@ -16,6 +16,7 @@ and technologies.
 For this application we used
 
 - Kotlin as a programing language
+- Koin for DI
 - Room as a Database
 - View Binding
 - AndroidX components 
